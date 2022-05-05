@@ -6,43 +6,43 @@ public class Regions {
 
 	// Constructors
 	Regions(int[][] initialTable) {
-		// Âûñîòà è øèðèíà èçíà÷àëüíîé òàáëèöû
+		// Ð’Ñ‹ÑÐ¾Ñ‚Ð° Ð¸ ÑˆÐ¸Ñ€Ð¸Ð½Ð° Ð¸Ð·Ð½Ð°Ñ‡Ð°Ð»ÑŒÐ½Ð¾Ð¹ Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ñ‹
 		this.numberOfColumns = initialTable.length;
 		this.numberOfRows = initialTable[0].length;
 		this.initialTable = initialTable;
 	}
 
 	// Methods
-	// Ïðîâåðÿåì ìîæíî ëè/íóæíî ëè ïðîñìàòðèâàòü ñîñåäíèå ÿ÷åéêè, åñòü ëè åùå íåó÷òåííûå âåðøèíû.
+	// ÐŸÑ€Ð¾Ð²ÐµÑ€ÑÐµÐ¼ Ð¼Ð¾Ð¶Ð½Ð¾ Ð»Ð¸/Ð½ÑƒÐ¶Ð½Ð¾ Ð»Ð¸ Ð¿Ñ€Ð¾ÑÐ¼Ð°Ñ‚Ñ€Ð¸Ð²Ð°Ñ‚ÑŒ ÑÐ¾ÑÐµÐ´Ð½Ð¸Ðµ ÑÑ‡ÐµÐ¹ÐºÐ¸, ÐµÑÑ‚ÑŒ Ð»Ð¸ ÐµÑ‰Ðµ Ð½ÐµÑƒÑ‡Ñ‚ÐµÐ½Ð½Ñ‹Ðµ Ð²ÐµÑ€ÑˆÐ¸Ð½Ñ‹.
 	boolean isSafe(int initialTable[][], int row, int col, boolean featureTable[][]) {
 		return (row >= 0) && (row < this.numberOfRows) && (col >= 0) && (col < this.numberOfColumns) && (initialTable[row][col] == 1 && !featureTable[row][col]);
 	}
 
-	// Ðåêóðñèâíàÿ ôóíêöèÿ äëÿ ïîèñêà â ãëóáèíó
+	// Ð ÐµÐºÑƒÑ€ÑÐ¸Ð²Ð½Ð°Ñ Ñ„ÑƒÐ½ÐºÑ†Ð¸Ñ Ð´Ð»Ñ Ð¿Ð¾Ð¸ÑÐºÐ° Ð² Ð³Ð»ÑƒÐ±Ð¸Ð½Ñƒ
 	void depthFirstSearch(int initialTable[][], int row, int column, boolean featureTable[][]) {
-		// Ïîäñìîòðåë íà SOF, êàê êðàñèâî ïåðåáðàòü âñåõ ñîñåäåé.
+		// ÐŸÐ¾Ð´ÑÐ¼Ð¾Ñ‚Ñ€ÐµÐ» Ð½Ð° SOF, ÐºÐ°Ðº ÐºÑ€Ð°ÑÐ¸Ð²Ð¾ Ð¿ÐµÑ€ÐµÐ±Ñ€Ð°Ñ‚ÑŒ Ð²ÑÐµÑ… ÑÐ¾ÑÐµÐ´ÐµÐ¹.
 		int rowOfNeibour[] = new int[] { -1, -1, -1, -0, +0, +1, 1, 1 };
 		int colOfNeibour[] = new int[] { -1, -0, +1, -1, +1, -1, 0, 1 };
 
-		// Ïðèñâàèâàåì ýëåìåíòó òàáëèöû ñâîéñòâî, ÷òî îí óæå ïðèíàäëåæèò êàêîìó-òî ðåãèîíó.
+		// ÐŸÑ€Ð¸ÑÐ²Ð°Ð¸Ð²Ð°ÐµÐ¼ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ñƒ Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ñ‹ ÑÐ²Ð¾Ð¹ÑÑ‚Ð²Ð¾, Ñ‡Ñ‚Ð¾ Ð¾Ð½ ÑƒÐ¶Ðµ Ð¿Ñ€Ð¸Ð½Ð°Ð´Ð»ÐµÐ¶Ð¸Ñ‚ ÐºÐ°ÐºÐ¾Ð¼Ñƒ-Ñ‚Ð¾ Ñ€ÐµÐ³Ð¸Ð¾Ð½Ñƒ.
 		featureTable[row][column] = true;
 
-		// Ïåðåáîð âñåõ 8-ìè ñîñåäåé.
+		// ÐŸÐµÑ€ÐµÐ±Ð¾Ñ€ Ð²ÑÐµÑ… 8-Ð¼Ð¸ ÑÐ¾ÑÐµÐ´ÐµÐ¹.
 		for (int k = 0; k < 8; ++k)
 			if (isSafe(initialTable, row + rowOfNeibour[k], column + colOfNeibour[k], featureTable))
 				depthFirstSearch(initialTable, row + rowOfNeibour[k], column + colOfNeibour[k], featureTable);
 	}
 
-	// Ïîäñ÷åò ðåãèîíîâ, âûçûâàåòñÿ èç îñíîâíîé ïðîãðàììû
+	// ÐŸÐ¾Ð´ÑÑ‡ÐµÑ‚ Ñ€ÐµÐ³Ð¸Ð¾Ð½Ð¾Ð², Ð²Ñ‹Ð·Ñ‹Ð²Ð°ÐµÑ‚ÑÑ Ð¸Ð· Ð¾ÑÐ½Ð¾Ð²Ð½Ð¾Ð¹ Ð¿Ñ€Ð¾Ð³Ñ€Ð°Ð¼Ð¼Ñ‹
 	int count() {
-		// Âñïîìîãàòåëüíàÿ òàáëèöà ñ ïðèçíàêîì êàæäîãî ýëåìåíòà, êîòîðûé ïîêàçûâàåò, ó÷ëè ëè ìû ýòîò ýëåìåíò ïðè ïîäñ÷åòå ðåãèîíîâ.
+		// Ð’ÑÐ¿Ð¾Ð¼Ð¾Ð³Ð°Ñ‚ÐµÐ»ÑŒÐ½Ð°Ñ Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° Ñ Ð¿Ñ€Ð¸Ð·Ð½Ð°ÐºÐ¾Ð¼ ÐºÐ°Ð¶Ð´Ð¾Ð³Ð¾ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð°, ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ð¹ Ð¿Ð¾ÐºÐ°Ð·Ñ‹Ð²Ð°ÐµÑ‚, ÑƒÑ‡Ð»Ð¸ Ð»Ð¸ Ð¼Ñ‹ ÑÑ‚Ð¾Ñ‚ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚ Ð¿Ñ€Ð¸ Ð¿Ð¾Ð´ÑÑ‡ÐµÑ‚Ðµ Ñ€ÐµÐ³Ð¸Ð¾Ð½Ð¾Ð².
 		boolean featureTable[][] = new boolean[this.numberOfRows][this.numberOfColumns];
 
-		// Ïåðåáîð âñåõ ÿ÷ååê èñõîäíîé òàáëèöû
+		// ÐŸÐµÑ€ÐµÐ±Ð¾Ñ€ Ð²ÑÐµÑ… ÑÑ‡ÐµÐµÐº Ð¸ÑÑ…Ð¾Ð´Ð½Ð¾Ð¹ Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ñ‹
 		int count = 0;
 		for (int i = 0; i < this.numberOfRows; ++i)
 			for (int j = 0; j < this.numberOfColumns; ++j)
-				if (this.initialTable[i][j] == 1 && !featureTable[i][j]) // Íàøëè íîâûé ðåãèîí è íà÷èíàåò õîäèòü ïî âñåì åãî âåðøèíàì
+				if (this.initialTable[i][j] == 1 && !featureTable[i][j]) // ÐÐ°ÑˆÐ»Ð¸ Ð½Ð¾Ð²Ñ‹Ð¹ Ñ€ÐµÐ³Ð¸Ð¾Ð½ Ð¸ Ð½Ð°Ñ‡Ð¸Ð½Ð°ÐµÑ‚ Ñ…Ð¾Ð´Ð¸Ñ‚ÑŒ Ð¿Ð¾ Ð²ÑÐµÐ¼ ÐµÐ³Ð¾ Ð²ÐµÑ€ÑˆÐ¸Ð½Ð°Ð¼
 				{
 					depthFirstSearch(this.initialTable, i, j, featureTable);
 					++count;
