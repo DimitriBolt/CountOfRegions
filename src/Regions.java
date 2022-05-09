@@ -42,8 +42,9 @@ public class Regions {
 		int count = 0;
 		for (int i = 0; i < this.numberOfRows; ++i)
 			for (int j = 0; j < this.numberOfColumns; ++j)
-				if (this.initialTable[i][j] == 1 && !featureTable[i][j]) // Нашли новый регион и начинает ходить по всем его вершинам
+				if (this.initialTable[i][j] == 1 && !featureTable[i][j]) // Нашли новый регион и начинаем ходить по всем его вершинам
 				{
+					// Рекурсивная функция для поиска в глубину
 					depthFirstSearch(this.initialTable, i, j, featureTable);
 					++count;
 				}
