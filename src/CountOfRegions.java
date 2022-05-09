@@ -1,15 +1,17 @@
 public class CountOfRegions {
 	public static void main(String[] args) {
+		//TODO remove all Russian speaking comments and add English comments. 
+		// Тестирование DFS
 		int testArea1[][] = {
 				{ 0, 1, 0, 0, 1 },
 				{ 0, 1, 0, 0, 1 },
 				{ 1, 1, 1, 1, 1 },
 				{ 0, 0, 0, 0, 0 },
 				{ 1, 1, 0, 0, 1 } };
-		// Класс Regions - только лишь контейнер методов
-		Regions regions = new Regions(testArea1);
-		int regionCounts = regions.count();
-		System.out.println("The count of the regions = " + regionCounts);
+		// Класс Regions_DFS_Recursion - только лишь контейнер методов
+		Regions_DFS_Recursion regions1 = new Regions_DFS_Recursion(testArea1);
+		int regionCounts1 = regions1.count();
+		System.out.printf("The count of the regions = %s (DFS)\n", regionCounts1);
 		
 		int testArea2[][] = {
 				{ 0, 1, 0, 0, 1 },
@@ -17,8 +19,18 @@ public class CountOfRegions {
 				{ 1, 1, 1, 1, 1 },
 				{ 0, 0, 0, 0, 0 },
 				{ 1, 1, 0, 0, 1 } };
-		Regions regions2 = new Regions(testArea2);
+		Regions_DFS_Recursion regions2 = new Regions_DFS_Recursion(testArea2);
 		int regionCounts2 = regions2.count();
-		System.out.println("The count of the regions = " + regionCounts2);
+		System.out.printf("The count of the regions = %s (DFS)\n\n", regionCounts2);
+		
+		// Тестирование BFS
+		Regions_BFS regions_BFS1 = new Regions_BFS(testArea1);
+		int regionCounts_BFS1 = regions_BFS1.count(); 
+		System.out.printf("The count of the regions = %s (BFS)\n", regionCounts_BFS1);	
+		
+		Regions_BFS regions_BFS2 = new Regions_BFS(testArea2);
+		int regionCounts_BFS2 = regions_BFS2.count(); 
+		System.out.printf("The count of the regions = %s (BFS)\n", regionCounts_BFS2);	
+
 	}
 }

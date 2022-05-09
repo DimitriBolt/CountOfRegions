@@ -1,11 +1,11 @@
-public class Regions {
+public class Regions_DFS_Recursion {
 	// private Instance variable
 	int numberOfColumns;
 	int numberOfRows;
 	int initialTable[][];
 
 	// Constructors
-	Regions(int[][] initialTable) {
+	Regions_DFS_Recursion(int[][] initialTable) {
 		// Высота и ширина изначальной таблицы
 		this.numberOfColumns = initialTable.length;
 		this.numberOfRows = initialTable[0].length;
