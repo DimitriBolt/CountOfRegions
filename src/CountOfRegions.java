@@ -30,7 +30,7 @@ public class CountOfRegions {
 		
 		Regions_BFS regions_BFS2 = new Regions_BFS(testArea2);
 		int regionCounts_BFS2 = regions_BFS2.count(); 
-		System.out.printf("The count of the regions = %s (BFS)\n", regionCounts_BFS2);	
+		System.out.printf("The count of the regions = %s (BFS)\n", regionCounts_BFS2);
 
 	}
 }
