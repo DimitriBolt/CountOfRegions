@@ -1,3 +1,4 @@
+import java.util.ArrayDeque;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -15,12 +16,12 @@ public class Regions_BFS {
 		this.initialTable = initialTable;
 	}
 
-	static class pair {
-		int first, second;
+	static class Node {
+		int x, y;
 
-		public pair(int first, int second) {
-			this.first = first;
-			this.second = second;
+		public Node(int x, int y) {
+			this.x = x;
+			this.y = y;
 		}
 	}
 
@@ -38,23 +39,23 @@ public class Regions_BFS {
 		int colOfNeibour[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
 
 		// First step of BFS. Put the initial node into the empty queue. 
-		Queue<pair> queue = new LinkedList<pair>();
-		queue.add(new pair(si, sj));
+		Queue<Node> queue = new ArrayDeque<Node>();
+		queue.add(new Node(si, sj));
 		// Присваиваем элементу таблицы свойство, что он уже принадлежит какому-то региону.
 		featureTable[si][sj] = true;
 
 		// TODO add comment about second steps of BFS algorithm.
 		while (!queue.isEmpty()) {
 
-			int i = queue.peek().first;
-			int j = queue.peek().second;
+			int i = queue.peek().x;
+			int j = queue.peek().y;
 			queue.remove();
 
 			// Перебор всех 8-ми соседей.
 			for (int k = 0; k < 8; k++) {
 				if (isSafe(initialTable, i + rowOfNeibour[k], j + colOfNeibour[k], featureTable)) {
 					featureTable[i + rowOfNeibour[k]][j + colOfNeibour[k]] = true;
-					queue.add(new pair(i + rowOfNeibour[k], j + colOfNeibour[k]));
+					queue.add(new Node(i + rowOfNeibour[k], j + colOfNeibour[k]));
 				}
 			}
 		}
