@@ -1,5 +1,4 @@
 import java.util.ArrayDeque;
-import java.util.LinkedList;
 import java.util.Queue;
 
 public class Regions_BFS {
@@ -10,7 +9,7 @@ public class Regions_BFS {
 
 	// Constructors
 	Regions_BFS(int[][] initialTable) {
-		// Высота и ширина изначальной таблицы
+		// Width and height of the initial table.
 		this.numberOfColumns = initialTable.length;
 		this.numberOfRows = initialTable[0].length;
 		this.initialTable = initialTable;
@@ -26,32 +25,34 @@ public class Regions_BFS {
 	}
 
 	// Methods
-	// Проверяем можно ли/нужно ли просматривать соседние ячейки, есть ли еще неучтенные вершины.
+	// We must check that the node is inside the area. Also must check that the node belongs to the current region and does not belong
+	// previously considered region.
 	boolean isSafe(int initialTable[][], int i, int j, boolean featureTable[][]) {
-		return (i >= 0) && (i < this.numberOfRows) && (j >= 0) && (j < this.numberOfColumns) && (initialTable[i][j] == 1 && !featureTable[i][j]);
+		return (i >= 0) && (i < this.numberOfRows) && (j >= 0) && (j < this.numberOfColumns)
+				&& (initialTable[i][j] == 1 && !featureTable[i][j]);
 	}
-	
-	// Реализация поиска в ширину через добавление в очередь.
+
+	// Implementation of " Breadth-first search" algorithm using a queue.
 	void breadthFirstSearch(int initialTable[][], boolean featureTable[][], int si, int sj) {
 
-		// Подсмотрел на SOF, как красиво перебрать всех соседей.
+		// The way to walk around all neighbors.
 		int rowOfNeibour[] = { -1, -1, -1, 0, 0, 1, 1, 1 };
 		int colOfNeibour[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
 
-		// First step of BFS. Put the initial node into the empty queue. 
+		// First step of BFS. Put the initial node into the empty queue.
 		Queue<Node> queue = new ArrayDeque<Node>();
 		queue.add(new Node(si, sj));
-		// Присваиваем элементу таблицы свойство, что он уже принадлежит какому-то региону.
+		// marking that the node belongs to some region.
 		featureTable[si][sj] = true;
 
-		// TODO add comment about second steps of BFS algorithm.
+		// Second steps-loop of the classic BFS algorithm
 		while (!queue.isEmpty()) {
 
 			int i = queue.peek().x;
 			int j = queue.peek().y;
 			queue.remove();
 
-			// Перебор всех 8-ми соседей.
+			// Loop over all 8 neighbors.
 			for (int k = 0; k < 8; k++) {
 				if (isSafe(initialTable, i + rowOfNeibour[k], j + colOfNeibour[k], featureTable)) {
 					featureTable[i + rowOfNeibour[k]][j + colOfNeibour[k]] = true;
@@ -61,16 +62,16 @@ public class Regions_BFS {
 		}
 	}
 
-	// Подсчет регионов, вызывается из основной программы.
+	// It is the method where we count the number of connected regions. This method is called from the main outside program.
 	int count() {
-		// Вспомогательная таблица с признаком каждого элемента, который показывает, учли ли мы этот элемент при подсчете регионов.
+		// The auxiliary table consists of the features of each node and shows whether the node belongs to some connected region or not.
 		boolean[][] featureTable = new boolean[this.numberOfRows][this.numberOfColumns];
 
-		// Перебор всех ячеек исходной таблицы
+		// A loop over all elements. of the area.
 		int count = 0;
 		for (int i = 0; i < this.numberOfRows; i++) {
 			for (int j = 0; j < this.numberOfColumns; j++) {
-				if (this.initialTable[i][j] == 1 && !featureTable[i][j]) {
+				if (this.initialTable[i][j] == 1 && !featureTable[i][j]) { // We found a new region and we are going over all of its neighbors for finding vertices.
 					breadthFirstSearch(this.initialTable, featureTable, i, j);
 					count++;
 				}
